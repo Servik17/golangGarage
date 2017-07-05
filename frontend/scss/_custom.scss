@@ -1,0 +1,22 @@
+// Here you can add other styles
+.app-footer {
+  margin-bottom: 1px;
+}
+
+.content-container {
+  padding-top: 30px;
+}
+
+@media (max-width: 767px) {
+  .main .container-fluid {
+    padding: 0 15px;
+  }
+  .content-container {
+    padding-top: 15px;
+  }
+}
+
+.btn,
+a {
+  cursor: pointer;
+}
