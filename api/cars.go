@@ -3,9 +3,11 @@ package api
 import (
 	"database/sql"
 	"encoding/json"
-	"github.com/julienschmidt/httprouter"
 	"log"
 	"net/http"
+	"strconv"
+
+	"github.com/julienschmidt/httprouter"
 
 	"../models"
 )
@@ -79,8 +81,8 @@ func CarAddHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) 
 }
 
 func CarUpdateHandler(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
-	carId := ps.ByName("id")
-	if carId == "" {
+	carID, err := strconv.Atoi(ps.ByName("id"))
+	if err != nil {
 		http.Error(w, http.StatusText(400), http.StatusBadRequest)
 		return
 	}
@@ -89,13 +91,13 @@ func CarUpdateHandler(w http.ResponseWriter, r *http.Request, ps httprouter.Para
 
 	car := models.Car{}
 
-	err := decoder.Decode(&car)
+	err = decoder.Decode(&car)
 	if err != nil {
 		http.Error(w, http.StatusText(400), http.StatusBadRequest)
 	}
 	defer r.Body.Close()
 
-	err = models.UpdateCar(&car, carId)
+	err = models.UpdateCar(&car, carID)
 	if err != nil {
 		http.Error(w, http.StatusText(500), http.StatusInternalServerError)
 	}

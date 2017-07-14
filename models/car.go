@@ -1,14 +1,16 @@
 package models
 
+import "./query"
+
 type Car struct {
-	Id      int    `json:"id"`
+	ID      int    `json:"id"`
 	Mark    string `json:"mark"`
 	Model   string `json:"model"`
 	Mileage int    `json:"mileage"`
 }
 
 func GetCars() ([]Car, error) {
-	rows, err := garageDB.Query("SELECT * FROM car")
+	rows, err := garageDB.Query(query.Cars)
 	if err != nil {
 		return nil, err
 	}
@@ -20,7 +22,7 @@ func GetCars() ([]Car, error) {
 	for rows.Next() {
 		car := Car{}
 
-		err := rows.Scan(&car.Id, &car.Mark, &car.Model, &car.Mileage)
+		err := rows.Scan(&car.ID, &car.Mark, &car.Model, &car.Mileage)
 		if err != nil {
 			return nil, err
 		}
@@ -32,11 +34,11 @@ func GetCars() ([]Car, error) {
 }
 
 func GetCar(id string) (*Car, error) {
-	row := garageDB.QueryRow("SELECT * FROM car WHERE id=$1", id)
+	row := garageDB.QueryRow(query.Car, id)
 
 	car := Car{}
 
-	err := row.Scan(&car.Id, &car.Mark, &car.Model, &car.Mileage)
+	err := row.Scan(&car.ID, &car.Mark, &car.Model, &car.Mileage)
 	if err != nil {
 		return nil, err
 	}
@@ -45,7 +47,7 @@ func GetCar(id string) (*Car, error) {
 }
 
 func AddCar(car *Car) (int, error) {
-	row := garageDB.QueryRow(`INSERT INTO car (mark, model, mileage) VALUES ($1, $2, $3) RETURNING id`, car.Mark, car.Model, car.Mileage)
+	row := garageDB.QueryRow(query.AddCar, car.Mark, car.Model, car.Mileage)
 
 	var id int
 
@@ -57,8 +59,8 @@ func AddCar(car *Car) (int, error) {
 	return id, nil
 }
 
-func UpdateCar(car *Car, carId string) error {
-	garageDB.QueryRow(`UPDATE car SET (mark, model, mileage) = ($1, $2, $3) WHERE id=$4`, car.Mark, car.Model, car.Mileage, carId)
+func UpdateCar(car *Car, carID int) error {
+	garageDB.QueryRow(query.UpdateCar, car.Mark, car.Model, car.Mileage, carID)
 
 	return nil
 }

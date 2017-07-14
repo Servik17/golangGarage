@@ -1,12 +1,12 @@
 package models
 
 type SparePartCategory struct {
-	Id   int    `json:"id"`
+	ID   int    `json:"id"`
 	Name string `json:"name"`
 }
 
 type SparePart struct {
-	Id           int               `json:"id"`
+	ID           int               `json:"id"`
 	Name         string            `json:"name"`
 	VendorCode   string            `json:"vendorCode"`
 	Price        float64           `json:"price"`
@@ -18,7 +18,7 @@ type SparePart struct {
 }
 
 type RepairSparePart struct {
-	Id         int       `json:"id"`
+	ID         int       `json:"id"`
 	AmountType uint8     `json:"amountType"`
 	Amount     uint8     `json:"amount"`
 	SparePart  SparePart `json:"sparePart"`
