@@ -8,6 +8,7 @@ import (
 
 	"../models"
 	"database/sql"
+	"strconv"
 )
 
 func RepairsHandler(w http.ResponseWriter, _ *http.Request, _ httprouter.Params) {
@@ -26,8 +27,8 @@ func RepairsHandler(w http.ResponseWriter, _ *http.Request, _ httprouter.Params)
 }
 
 func RepairHandler(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
-	id := ps.ByName("id")
-	if id == "" {
+	id, err := strconv.Atoi(ps.ByName("id"))
+	if err != nil {
 		http.Error(w, http.StatusText(400), http.StatusBadRequest)
 		return
 	}

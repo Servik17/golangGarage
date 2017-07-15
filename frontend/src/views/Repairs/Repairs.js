@@ -2,20 +2,14 @@ import React, {Component} from 'react';
 import axios from 'axios';
 
 import RepairsTable from './RepairsTable';
-import {Button} from 'reactstrap';
-import AddRepairModalForm from './AddRepairModalForm';
+import {Link} from 'react-router-dom';
 
 class Repairs extends Component {
     constructor() {
         super();
         this.state = {
-            repairs: [],
-            addRepairForm: false
+            repairs: []
         };
-
-        this.toggleAddRepairForm = this.toggleAddRepairForm.bind(this);
-        this.closeModal = this.closeModal.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     componentDidMount() {
@@ -28,20 +22,6 @@ class Repairs extends Component {
         });
     }
 
-    toggleAddRepairForm() {
-        this.setState({
-            addRepairForm: !this.state.addRepairForm
-        });
-    }
-
-    closeModal() {
-        this.toggleAddRepairForm();
-    }
-
-    handleSubmit() {
-        this.toggleAddRepairForm();
-    }
-
     render() {
         return (
             <div className="animated fadeIn">
@@ -50,12 +30,9 @@ class Repairs extends Component {
                         <div className="card">
                             <div className="card-header">
                                 <i className="fa fa-align-justify"/> Список ремонтов
-                                <Button size="sm" color="link" className="pull-right" onClick={this.toggleAddRepairForm}>
+                                <Link to={'/repair/add'} className="pull-right">
                                     <i className="fa fa-plus-square-o"/> добавить
-                                </Button>
-                                <AddRepairModalForm isOpen={this.state.addRepairForm}
-                                                    close={this.closeModal}
-                                                    submitted={this.handleSubmit}/>
+                                </Link>
                             </div>
                             <div className="card-block">
                                 <RepairsTable repairs={this.state.repairs}/>

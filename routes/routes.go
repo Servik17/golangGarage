@@ -8,16 +8,23 @@ import (
 	"../api"
 )
 
+func path(p string) string {
+	baseApiPath := "api/v0"
+	return baseApiPath + p
+}
+
 func InitRoutes() http.Handler {
 	r := httprouter.New()
 
 	r.GET("/", api.IndexHandler)
-	r.GET("/api/v0/cars", api.CarsHandler)
-	r.GET("/api/v0/cars/:id", api.CarHandler)
+	r.GET(path("/cars"), api.CarsHandler)
+	r.GET(path("/cars/:id"), api.CarHandler)
 	//r.POST("/api/v0/cars/add", api.CarAddHandler)
-	r.POST("/api/v0/cars/:id/update", api.CarUpdateHandler)
-	r.GET("/api/v0/repairs", api.RepairsHandler)
-	r.GET("/api/v0/repairs/:id", api.RepairsHandler)
+	r.POST(path("/cars/:id/update"), api.CarUpdateHandler)
+	r.GET(path("/repairs"), api.RepairsHandler)
+	r.GET(path("/repairs/:id"), api.RepairsHandler)
+	r.GET(path("/spare-part-categories"), api.SparePartCategoriesHandler)
+	r.GET(path("/spare-parts/:carID"), api.SparePartsHandler)
 
 	r.NotFound = http.StripPrefix("/static/", http.FileServer(http.Dir("./frontend/build/static/")))
 

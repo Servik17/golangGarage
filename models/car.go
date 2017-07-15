@@ -33,7 +33,7 @@ func GetCars() ([]Car, error) {
 	return cars, nil
 }
 
-func GetCar(id string) (*Car, error) {
+func GetCar(id int) (*Car, error) {
 	row := garageDB.QueryRow(query.Car, id)
 
 	car := Car{}
@@ -49,14 +49,7 @@ func GetCar(id string) (*Car, error) {
 func AddCar(car *Car) (int, error) {
 	row := garageDB.QueryRow(query.AddCar, car.Mark, car.Model, car.Mileage)
 
-	var id int
-
-	err := row.Scan(id)
-	if err != nil {
-		return 0, err
-	}
-
-	return id, nil
+	return getIdFromRow(row)
 }
 
 func UpdateCar(car *Car, carID int) error {

@@ -12,6 +12,7 @@ import Garage from './views/Garage/';
 import CarDetail from './views/CarDetail/';
 import Repairs from './views/Repairs/';
 import RepairDetail from './views/RepairDetail/';
+import RepairAdd from './views/RepairAdd/';
 
 class App extends Component {
     render() {
@@ -29,6 +30,7 @@ class App extends Component {
                                     <Route path="/cars/:id" name="CarDetail" component={CarDetail}/>
                                     <Route exact path="/repairs" name="Repairs" component={Repairs}/>
                                     <Route path="/repairs/:id" name="RepairDetail" component={RepairDetail}/>
+                                    <Route path="/repair/add" name="RepairAdd" component={RepairAdd}/>
                                     <Redirect from="/" to="/dashboard"/>
                                 </Switch>
                             </div>

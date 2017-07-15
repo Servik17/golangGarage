@@ -53,9 +53,6 @@ func Migrate() {
 			name VARCHAR(50),
 			vendor_code VARCHAR(50),
 			category_id INT REFERENCES spare_part_category,
-			price NUMERIC (9, 2),
-			resource_type SMALLINT,
-			resource INT,
 			car_id INT REFERENCES car,
 			description VARCHAR(200)
 		);
@@ -69,6 +66,9 @@ func Migrate() {
 		CREATE TABLE repair_spare_part (
 			id SERIAL PRIMARY KEY,
 			spare_part_id INT REFERENCES spare_part,
+			price NUMERIC (9, 2),
+			resource_type SMALLINT,
+			resource INT,
 			amount SMALLINT,
 			amount_type SMALLINT
 		);

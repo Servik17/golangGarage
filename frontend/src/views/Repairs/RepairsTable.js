@@ -9,7 +9,7 @@ const RepairsTable = ({repairs}) => {
                <td>{repair.date}</td>
                <td>{`${repair.car.mark} ${repair.car.model}`}</td>
                <td>{repair.repairSpareParts.length}</td>
-               <td>{repair.repairSpareParts.reduce((a, b) => a.sparePart.price + b.sparePart.price)}</td>
+               <td>{repair.repairSpareParts.reduce((a, b) => a.price + b.price)}</td>
                <td><Link to={`/repairs/${repair.id}`}><i className="fa fa-edit"/> подробнее</Link></td>
            </tr>
        );

@@ -8,8 +8,8 @@ const RepairDetailSparePartsTable = ({repairSpareParts}) => {
                 <td>{repairSparePart.sparePart.name}</td>
                 <td>{repairSparePart.sparePart.category.name}</td>
                 <td>{repairSparePart.amount} {repairSparePart.amountType === 1 ? 'шт.' : 'л.'}</td>
-                <td>{repairSparePart.sparePart.price}</td>
-                <td>{repairSparePart.sparePart.resource} {repairSparePart.sparePart.resourceType === 1 ? 'тыс. км.' : 'мес.'}</td>
+                <td>{repairSparePart.price}</td>
+                <td>{repairSparePart.resource} {repairSparePart.resourceType === 1 ? 'тыс. км.' : 'мес.'}</td>
             </tr>
         );
     });

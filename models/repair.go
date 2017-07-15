@@ -52,12 +52,12 @@ func GetRepairs() ([]Repair, error) {
 				&rsp.ID,
 				&rsp.AmountType,
 				&rsp.Amount,
+				&rsp.Price,
+				&rsp.ResourceType,
+				&rsp.Resource,
 				&rsp.SparePart.ID,
 				&rsp.SparePart.Name,
 				&rsp.SparePart.VendorCode,
-				&rsp.SparePart.Price,
-				&rsp.SparePart.ResourceType,
-				&rsp.SparePart.Resource,
 				&rsp.SparePart.Description,
 				&rsp.SparePart.Category.ID,
 				&rsp.SparePart.Category.Name,
@@ -77,7 +77,7 @@ func GetRepairs() ([]Repair, error) {
 	return repairs, nil
 }
 
-func GetRepair(id string) (*Repair, error) {
+func GetRepair(id int) (*Repair, error) {
 	row := garageDB.QueryRow(query.Repair, id)
 
 	sp, err := garageDB.Query(query.SparePartsRepair, id)
@@ -109,12 +109,12 @@ func GetRepair(id string) (*Repair, error) {
 			&rsp.ID,
 			&rsp.AmountType,
 			&rsp.Amount,
+			&rsp.Price,
+			&rsp.ResourceType,
+			&rsp.Resource,
 			&rsp.SparePart.ID,
 			&rsp.SparePart.Name,
 			&rsp.SparePart.VendorCode,
-			&rsp.SparePart.Price,
-			&rsp.SparePart.ResourceType,
-			&rsp.SparePart.Resource,
 			&rsp.SparePart.Description,
 			&rsp.SparePart.Category.ID,
 			&rsp.SparePart.Category.Name,
@@ -130,3 +130,7 @@ func GetRepair(id string) (*Repair, error) {
 
 	return &repair, nil
 }
+
+//func AddRepair() (int, error) {
+//
+//}

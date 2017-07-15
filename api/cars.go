@@ -28,13 +28,13 @@ func CarsHandler(w http.ResponseWriter, _ *http.Request, _ httprouter.Params) {
 }
 
 func CarHandler(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
-	id := ps.ByName("id")
-	if id == "" {
+	carID, err := strconv.Atoi(ps.ByName("id"))
+	if err != nil {
 		http.Error(w, http.StatusText(400), http.StatusBadRequest)
 		return
 	}
 
-	car, err := models.GetCar(id)
+	car, err := models.GetCar(carID)
 	switch {
 	case err == sql.ErrNoRows:
 		http.NotFound(w, r)
@@ -65,13 +65,13 @@ func CarAddHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) 
 	}
 	defer r.Body.Close()
 
-	id, err := models.AddCar(&car)
+	car.ID, err = models.AddCar(&car)
 	if err != nil {
 		http.Error(w, http.StatusText(500), http.StatusInternalServerError)
 		return
 	}
 
-	response, err := json.Marshal(map[string]int{"id": id})
+	response, err := json.Marshal(map[string]int{"id": car.ID})
 	if err != nil {
 		log.Fatal(err)
 	}
