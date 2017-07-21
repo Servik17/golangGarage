@@ -9,7 +9,6 @@ type SparePart struct {
 	Name        string            `json:"name"`
 	VendorCode  string            `json:"vendorCode"`
 	Description string            `json:"description"`
-	Car         Car               `json:"car"`
 	Category    SparePartCategory `json:"category"`
 }
 

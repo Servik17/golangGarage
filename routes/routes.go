@@ -9,7 +9,7 @@ import (
 )
 
 func path(p string) string {
-	baseApiPath := "api/v0"
+	baseApiPath := "/api/v0"
 	return baseApiPath + p
 }
 
