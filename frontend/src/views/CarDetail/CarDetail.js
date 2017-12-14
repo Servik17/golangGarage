@@ -1,100 +1,107 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import axios from 'axios';
 
-import {Button} from 'reactstrap';
+import { Button } from 'reactstrap';
 import CarDetailModalForm from './CarDetailModalForm';
 
 class CarDetail extends Component {
-    constructor() {
-        super();
-        this.state = {
-            car: {},
-            modal: false,
-            updateCar: {}
-        };
+  constructor() {
+    super();
+    this.state = {
+      car: {},
+      modal: false,
+      updateCar: {}
+    };
 
-        this.toggle = this.toggle.bind(this);
-        this.closeModal = this.closeModal.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.updateCarInfo = this.updateCarInfo.bind(this);
-    }
+    this.toggle = this.toggle.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.updateCarInfo = this.updateCarInfo.bind(this);
+  }
 
-    componentDidMount() {
-        axios.get(`api/v0/cars/${this.props.match.params.id}`)
-            .then(r => {
-                if (r.data) {
-                    this.setState({
-                        car: r.data,
-                        updateCar: r.data
-                    });
-                }
-        });
-    }
+  componentDidMount() {
+    axios.get(`api/v0/cars/${this.props.match.params.id}`)
+      .then(r => {
+        if (r.data) {
+          this.setState({
+            car: r.data,
+            updateCar: r.data
+          });
+        }
+      });
+  }
 
-    toggle() {
+  toggle() {
+    this.setState({
+      modal: !this.state.modal
+    });
+  }
+
+  handleSubmit() {
+    this.toggle();
+
+    axios.post(`/api/v0/cars/${this.state.car.id}/update`, this.state.updateCar)
+      .then(() => {
         this.setState({
-            modal: !this.state.modal
+          car: Object.assign({}, this.state.car, this.state.updateCar)
         });
-    }
+      });
+  }
 
-    handleSubmit() {
-        this.toggle();
+  updateCarInfo(e) {
+    e.preventDefault();
+    const field = e.target.name;
+    const updateCar = {};
 
-        axios.post(`/api/v0/cars/${this.state.car.id}/update`, this.state.updateCar)
-            .then(() => {
-                this.setState({
-                    car: Object.assign({}, this.state.car, this.state.updateCar)
-                });
-            });
-    }
+    updateCar[field] = e.target.value;
 
-    updateCarInfo(e) {
-        e.preventDefault();
-        const field = e.target.name;
-        const updateCar = {};
+    this.setState({
+      updateCar: Object.assign({}, this.state.updateCar, updateCar)
+    });
+  }
 
-        updateCar[field] = e.target.value;
+  closeModal() {
+    this.toggle();
+    this.setState({
+      updateCar: this.state.car
+    });
+  }
 
-        this.setState({
-            updateCar: Object.assign({}, this.state.updateCar, updateCar)
-        });
-    }
+  render() {
+    const car = this.state.car;
 
-    closeModal() {
-        this.toggle();
-        this.setState({
-            updateCar: this.state.car
-        });
-    }
-
-    render() {
-        const car = this.state.car;
-
-        return (
-            <div className="animated fadeIn">
-                <div className="row">
-                    <div className="col-md-6">
-                        <div className="card">
-                            <div className="card-header">
-                                {car.mark} {car.model}
-                                <Button size="sm" color="link" className="pull-right" onClick={this.toggle}>
-                                    <i className="fa fa-edit"/> Изменить
-                                </Button>
-                                <CarDetailModalForm car={this.state.updateCar}
-                                                    close={this.closeModal}
-                                                    isOpen={this.state.modal}
-                                                    change={this.updateCarInfo}
-                                                    submitted={this.handleSubmit}/>
-                            </div>
-                            <div className="card-block">
-                                {car.mileage}
-                            </div>
-                        </div>
-                    </div>
-                </div>
+    return (
+      <div className="animated fadeIn">
+        <div className="row">
+          <div className="col-md-6">
+            <div className="card">
+              <div className="card-header">
+                {car.mark} {car.model}
+                <Button
+                  size="sm"
+                  color="link"
+                  className="pull-right"
+                  onClick={this.toggle}
+                >
+                  <i className="fa fa-edit" /> Изменить
+                </Button>
+                <CarDetailModalForm
+                  car={this.state.updateCar}
+                  close={this.closeModal}
+                  isOpen={this.state.modal}
+                  change={this.updateCarInfo}
+                  submitted={this.handleSubmit}
+                />
+              </div>
+              <div className="card-block">
+                {car.mileage}
+              </div>
             </div>
-        );
-    }
+          </div>
+        </div>
+      </div>
+    );
+  }
 }
 
 export default CarDetail;

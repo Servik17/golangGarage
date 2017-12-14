@@ -1,43 +1,36 @@
-import React, {Component} from "react";
-import {Link} from "react-router-dom";
+import React, { Component } from 'react';
+import {
+  Nav,
+  NavItem,
+  NavbarToggler,
+  NavbarBrand,
+} from 'reactstrap';
 
 class Header extends Component {
 
-    sidebarToggle(e) {
-        e.preventDefault();
-        document.body.classList.toggle('sidebar-hidden');
-    }
+  sidebarToggle(e) {
+    e.preventDefault();
+    document.body.classList.toggle('sidebar-hidden');
+  }
 
-    sidebarMinimize(e) {
-        e.preventDefault();
-        document.body.classList.toggle('sidebar-minimized');
-    }
+  mobileSidebarToggle(e) {
+    e.preventDefault();
+    document.body.classList.toggle('sidebar-mobile-show');
+  }
 
-    mobileSidebarToggle(e) {
-        e.preventDefault();
-        document.body.classList.toggle('sidebar-mobile-show');
-    }
-
-    asideToggle(e) {
-        e.preventDefault();
-        document.body.classList.toggle('aside-menu-hidden');
-    }
-
-    render() {
-        return (
-            <header className="app-header navbar">
-                <button className="navbar-toggler mobile-sidebar-toggler d-lg-none" onClick={Header.mobileSidebarToggle}
-                        type="button">&#9776;</button>
-                <Link to={'/dashboard'} className="navbar-brand"/>
-                <ul className="nav navbar-nav d-md-down-none mr-auto">
-                    <li className="nav-item">
-                        <a className="nav-link navbar-toggler sidebar-toggler"
-                           onClick={Header.sidebarToggle}>&#9776;</a>
-                    </li>
-                </ul>
-            </header>
-        )
-    }
+  render() {
+    return (
+      <header className="app-header navbar">
+        <NavbarToggler className="d-lg-none" onClick={this.mobileSidebarToggle}>
+          <span className="navbar-toggler-icon"></span>
+        </NavbarToggler>
+        <NavbarBrand href="#"></NavbarBrand>
+        <NavbarToggler className="d-md-down-none mr-auto" onClick={this.sidebarToggle}>
+          <span className="navbar-toggler-icon"></span>
+        </NavbarToggler>
+      </header>
+    );
+  }
 }
 
 export default Header;
