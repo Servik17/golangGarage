@@ -1,6 +1,0 @@
-{
-  "name": "CarDetail",
-  "version": "0.0.0",
-  "private": true,
-  "main": "./CarDetail.js"
-}

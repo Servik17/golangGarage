@@ -1,4 +1,4 @@
-export default {
+export const nav = {
   items: [
     {
       name: 'Dashboard',

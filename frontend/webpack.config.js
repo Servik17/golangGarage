@@ -16,7 +16,7 @@ console.log('SRC_DIR', SRC_DIR);
 module.exports = (env = {}) => {
   return {
     entry: {
-      index: [SRC_DIR + '/index.js']
+      index: ['babel-polyfill', SRC_DIR + '/index.jsx']
     },
     output: {
       path: BUILD_DIR,
@@ -40,7 +40,7 @@ module.exports = (env = {}) => {
             loader: 'babel-loader',
             options: {
               cacheDirectory: true,
-              presets: ['react', 'env']
+              presets: ['es2017', 'react', 'env']
             }
           }
         },
@@ -89,6 +89,9 @@ module.exports = (env = {}) => {
             name: './fonts/[name].[hash].[ext]'
           }
         }]
+    },
+    resolve: {
+      extensions: ['.js', '.jsx', '.json']
     },
     plugins: [
       new webpack.HotModuleReplacementPlugin(),
