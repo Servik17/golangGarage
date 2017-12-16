@@ -54,7 +54,7 @@ func CarHandler(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	w.Write(response)
 }
 
-func CarAddHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+func CarCreateHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	decoder := json.NewDecoder(r.Body)
 
 	car := models.Car{}

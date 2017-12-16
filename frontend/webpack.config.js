@@ -16,7 +16,7 @@ console.log('SRC_DIR', SRC_DIR);
 module.exports = (env = {}) => {
   return {
     entry: {
-      index: ['babel-polyfill', SRC_DIR + '/index.jsx']
+      index: ['babel-polyfill', `${SRC_DIR}/index.jsx`]
     },
     output: {
       path: BUILD_DIR,

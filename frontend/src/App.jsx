@@ -9,10 +9,10 @@ import { Footer } from './layout/Footer';
 
 // Views
 import { Dashboard } from './views/Dashboard';
-import { Garage } from './views/Garage';
-import { CarDetail } from './views/CarDetail';
-import { Repairs } from './views/Repairs';
-import { RepairDetail } from './views/RepairDetail';
+import { GarageContainer } from './views/Garage';
+import { CarDetailContainer } from './views/CarDetail';
+import { RepairsContainer } from './views/Repairs';
+import { RepairDetailContainer } from './views/RepairDetail';
 import { RepairAdd } from './views/RepairAdd';
 
 export const App = (props) => (
@@ -24,10 +24,10 @@ export const App = (props) => (
         <Container fluid>
           <Switch>
             <Route path="/dashboard" name="Dashboard" component={Dashboard} />
-            <Route exact path="/cars" name="Garage" component={Garage} />
-            <Route path="/cars/:id" name="CarDetail" component={CarDetail} />
-            <Route exact path="/repairs" name="Repairs" component={Repairs} />
-            <Route path="/repairs/:id" name="RepairDetail" component={RepairDetail} />
+            <Route exact path="/cars" name="Garage" component={GarageContainer} />
+            <Route path="/cars/:id" name="CarDetail" component={CarDetailContainer} />
+            <Route exact path="/repairs" name="Repairs" component={RepairsContainer} />
+            <Route path="/repairs/:id" name="RepairDetail" component={RepairDetailContainer} />
             <Route path="/repair/add" name="RepairAdd" component={RepairAdd} />
             <Redirect from="/" to="/dashboard" />
           </Switch>

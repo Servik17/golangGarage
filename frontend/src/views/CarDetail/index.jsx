@@ -1,74 +1,18 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import { Button } from 'reactstrap';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-import { CarDetailModalForm } from './CarDetailModalForm';
+import { CarDetailModalForm } from '../../components/CarDetailModal';
+import { getCar, toggleModal, updateCar } from '../../store/carDetail';
 
 export class CarDetail extends Component {
-  constructor() {
-    super();
-    this.state = {
-      car: {},
-      modal: false,
-      updateCar: {}
-    };
-
-    this.toggle = this.toggle.bind(this);
-    this.closeModal = this.closeModal.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.updateCarInfo = this.updateCarInfo.bind(this);
-  }
-
   componentDidMount() {
-    axios.get(`api/v0/cars/${this.props.match.params.id}`)
-      .then(r => {
-        if (r.data) {
-          this.setState({
-            car: r.data,
-            updateCar: r.data
-          });
-        }
-      });
-  }
-
-  toggle() {
-    this.setState({
-      modal: !this.state.modal
-    });
-  }
-
-  handleSubmit() {
-    this.toggle();
-
-    axios.post(`/api/v0/cars/${this.state.car.id}/update`, this.state.updateCar)
-      .then(() => {
-        this.setState({
-          car: Object.assign({}, this.state.car, this.state.updateCar)
-        });
-      });
-  }
-
-  updateCarInfo(e) {
-    e.preventDefault();
-    const field = e.target.name;
-    const updateCar = {};
-
-    updateCar[field] = e.target.value;
-
-    this.setState({
-      updateCar: Object.assign({}, this.state.updateCar, updateCar)
-    });
-  }
-
-  closeModal() {
-    this.toggle();
-    this.setState({
-      updateCar: this.state.car
-    });
+    this.props.getCar(this.props.match.params.id);
   }
 
   render() {
-    const car = this.state.car;
+    const { car, modalIsOpen, fetchingUpdate, updateCar, toggleModal } = this.props;
 
     return (
       <div className="animated fadeIn">
@@ -81,16 +25,16 @@ export class CarDetail extends Component {
                   size="sm"
                   color="link"
                   className="pull-right"
-                  onClick={this.toggle}
+                  onClick={() => toggleModal(true)}
                 >
                   <i className="fa fa-edit" /> Изменить
                 </Button>
                 <CarDetailModalForm
-                  car={this.state.updateCar}
-                  close={this.closeModal}
-                  isOpen={this.state.modal}
-                  change={this.updateCarInfo}
-                  submitted={this.handleSubmit}
+                  car={car}
+                  isOpen={modalIsOpen}
+                  fetching={fetchingUpdate}
+                  onClose={() => toggleModal(false)}
+                  onSave={(car) => updateCar(car)}
                 />
               </div>
               <div className="card-block">
@@ -103,3 +47,9 @@ export class CarDetail extends Component {
     );
   }
 }
+
+const mapStateToProps = (store) => store.carDetail;
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({getCar, toggleModal, updateCar}, dispatch);
+
+export const CarDetailContainer = connect(mapStateToProps, mapDispatchToProps)(CarDetail);

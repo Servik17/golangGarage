@@ -1,22 +1,14 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-import { RepairsTable } from './RepairsTable';
-import { Link, } from 'react-router-dom';
+import { getRepairs } from '../../store/repairs'
+import { RepairsTableContainer } from '../../components/RepairsTable';
 
 export class Repairs extends Component {
-  constructor() {
-    super();
-
-    this.state = {
-      repairs: []
-    };
-  }
-
-  async componentDidMount() {
-    const { data } = await axios.get('api/v0/repairs')
-      // .then(({ data }) => this.setState({ repairs: data }));
-    this.setState({ repairs: data })
+  componentDidMount() {
+    this.props.getRepairs();
   }
 
   render() {
@@ -32,12 +24,16 @@ export class Repairs extends Component {
                 </Link>
               </div>
               <div className="card-block">
-                <RepairsTable repairs={this.state.repairs} />
+                <RepairsTableContainer />
               </div>
             </div>
           </div>
         </div>
       </div>
-    )
+    );
   }
 }
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({getRepairs}, dispatch);
+
+export const RepairsContainer = connect(null, mapDispatchToProps)(Repairs);

@@ -5,7 +5,7 @@ import "database/sql"
 func getIdFromRow(r *sql.Row) (int, error) {
 	var id int
 
-	err := r.Scan(id)
+	err := r.Scan(&id)
 	if err != nil {
 		return 0, err
 	}

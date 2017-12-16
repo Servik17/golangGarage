@@ -1,13 +1,14 @@
-package migrations
+package main
 
 import (
 	"database/sql"
 	"fmt"
-	_ "github.com/lib/pq"
 	"log"
+
+	_ "github.com/lib/pq"
 )
 
-func Migrate() {
+func main() {
 	var table *sql.Rows
 	var err error
 	var db *sql.DB

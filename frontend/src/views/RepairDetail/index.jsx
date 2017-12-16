@@ -1,27 +1,14 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-import { RepairDetailSparePartsTable } from './RepairDetailSparePartsTable';
+import { getRepair } from '../../store/repairDetail';
+
+import { RepairDetailSparePartsTableContainer } from '../../components/RepairDetailSparePartsTable';
 
 export class RepairDetail extends Component {
-  constructor() {
-    super();
-    this.state = {
-      repair: {
-        repairSpareParts: []
-      }
-    };
-  }
-
   componentDidMount() {
-    axios.get(`api/v0/repairs/${this.props.match.params.repairId}`)
-      .then(r => {
-        if (r.data) {
-          this.setState({
-            repair: r.data[0]
-          });
-        }
-      });
+    this.props.getRepair(this.props.match.params.id);
   }
 
   render() {
@@ -44,7 +31,7 @@ export class RepairDetail extends Component {
                 <i className="fa fa-align-justify" /> Запчасти
               </div>
               <div className="card-block">
-                <RepairDetailSparePartsTable repairSpareParts={this.state.repair.repairSpareParts} />
+                <RepairDetailSparePartsTableContainer />
               </div>
             </div>
           </div>
@@ -53,3 +40,7 @@ export class RepairDetail extends Component {
     )
   }
 }
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({getRepair}, dispatch)
+
+export const RepairDetailContainer = connect(null, mapDispatchToProps)(RepairDetail);

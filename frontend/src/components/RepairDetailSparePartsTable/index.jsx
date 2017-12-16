@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 export const RepairDetailSparePartsTable = ({ repairSpareParts }) => (
   <table className="table">
@@ -14,6 +15,7 @@ export const RepairDetailSparePartsTable = ({ repairSpareParts }) => (
     </thead>
     <tbody>
       {
+        repairSpareParts && !!repairSpareParts.length &&
         repairSpareParts.map(repairSparePart => (
           <tr key={repairSparePart.id}>
             <td>{repairSparePart.sparePart.vendorCode}</td>
@@ -28,3 +30,7 @@ export const RepairDetailSparePartsTable = ({ repairSpareParts }) => (
     </tbody>
   </table>
 );
+
+const mapStateToProps = (store) => store.repairDetail.repairSpareParts;
+
+export const RepairDetailSparePartsTableContainer = connect(mapStateToProps)(RepairDetailSparePartsTable)

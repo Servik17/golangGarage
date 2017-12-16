@@ -27,7 +27,7 @@ export class RepairAdd extends Component {
       currentCar: car
     });
   }
-
+                                                                                                                                       
   addSparePart(sp) {
     this.setState({
       addedSpareParts: [...this.state.addedSpareParts, sp]

@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux';
 
 export const RepairsTable = ({ repairs }) => (
   <table className="table">
@@ -15,6 +16,7 @@ export const RepairsTable = ({ repairs }) => (
     </thead>
     <tbody>
       {
+        repairs && !!repairs.length &&
         repairs.map(repair => (
           <tr key={repair.id}>
             <td>{repair.id}</td>
@@ -29,3 +31,7 @@ export const RepairsTable = ({ repairs }) => (
     </tbody>
   </table>
 );
+
+const mapStateToProps = (store) => store.repairs;
+
+export const RepairsTableContainer = connect(mapStateToProps)(RepairsTable);
