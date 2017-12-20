@@ -13,7 +13,7 @@ export const getCar = (carId) => async (dispatch, getState) => {
   });
 
   try {
-    const { data } = await axios.get(`api/v0/car/${carId}/`);
+    const { data } = await axios.get(`api/v0/cars/${carId}/`);
 
     dispatch({
       type: SET_CAR,
@@ -39,7 +39,7 @@ export const updateCar = (car) => async (dispatch, getState) => {
   });
 
   try {
-    await axios.post(`/api/v0/car/${car.id}/edit/`, car);
+    await axios.post(`/api/v0/cars/${car.id}/edit/`, {...car, id: undefined});
 
     dispatch({
       type: SET_CAR,

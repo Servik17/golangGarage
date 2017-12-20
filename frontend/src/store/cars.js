@@ -32,7 +32,7 @@ export const createCar = (car) => async (dispatch, getState) => {
   });
 
   try {
-    const { id } = await axios.post('/api/v0/cars/create', car);
+    const { data: { id } } = await axios.post('/api/v0/car/create', car);
     const { cars } = getState().cars;
 
     dispatch({

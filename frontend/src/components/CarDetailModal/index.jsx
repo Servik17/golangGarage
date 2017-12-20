@@ -20,17 +20,17 @@ export class CarDetailModalForm extends Component {
 
   onChange (event) {
     const { car } = this.state;
-    const field = event.target.name;
-    const value = event.target.value;
+    const { name, value } = event.target;
 
     this.setState({
-      car: {...car, [field]: value}
+      car: {...car, [name]: name === 'mileage' ? Number(value) : value}
     });
   }
 
   render() {
     const { isOpen } = this.props;
     const { car } = this.state;
+    const isUpdate = !!this.props.car;
 
     return (
       <Modal isOpen={isOpen}>
@@ -68,7 +68,12 @@ export class CarDetailModalForm extends Component {
           <ModalFooter>
             <Button
               color="primary"
-              onClick={() => this.props.onSave(car)}
+              onClick={() => {
+                this.props.onSave(car);
+                if (!isUpdate) { 
+                  this.setState({car: emptyCar})
+                }
+              }}
             >
               Сохранить
             </Button>{' '}

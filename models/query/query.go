@@ -1,11 +1,5 @@
 package query
 
-// Cars
-const Cars string = `SELECT * FROM car`
-const Car string = `SELECT * FROM car WHERE id=$1`
-const AddCar string = `INSERT INTO car (mark, model, mileage) VALUES ($1, $2, $3) RETURNING id`
-const UpdateCar string = `UPDATE car SET (mark, model, mileage) = ($1, $2, $3) WHERE id=$4`
-
 // Reapirs
 const Repairs string = `SELECT * FROM repair INNER JOIN car USING (id)`
 const Repair string = `SELECT * FROM repair INNER JOIN car USING (id) WHERE id=$1`

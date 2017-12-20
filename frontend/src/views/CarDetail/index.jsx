@@ -13,7 +13,10 @@ export class CarDetail extends Component {
 
   render() {
     const { car, modalIsOpen, fetchingUpdate, updateCar, toggleModal } = this.props;
-
+    if (!car.id) {
+      return null;
+    }
+    
     return (
       <div className="animated fadeIn">
         <div className="row">

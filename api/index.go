@@ -2,9 +2,10 @@ package api
 
 import (
 	"fmt"
-	"github.com/julienschmidt/httprouter"
 	"html/template"
 	"net/http"
+
+	"github.com/julienschmidt/httprouter"
 )
 
 func IndexHandler(w http.ResponseWriter, _ *http.Request, _ httprouter.Params) {
